@@ -1,4 +1,3 @@
-import { useSpeechStore } from "@/store/useSpeechStore";
 import {
   Card,
   getCurrentItemType,
@@ -82,6 +81,7 @@ export function getCurrentItem({
 // navigate to home
 export const signIn = async ({ name, setUserName }: signInTypes) => {
   await AsyncStorage.setItem("onboarded", "true");
+  await AsyncStorage.setItem("name", name);
   setUserName(name);
   router.replace("/(main)");
 };
@@ -108,11 +108,12 @@ export const getLanguageName = (code: string): string => {
 };
 
 // update name
-export const updateName = ({
+export const updateName = async ({
   name,
   setUserName,
   setIsModalOpen,
 }: updateNameTypes) => {
+  await AsyncStorage.setItem("name", name);
   setUserName(name);
   setIsModalOpen(false);
 };

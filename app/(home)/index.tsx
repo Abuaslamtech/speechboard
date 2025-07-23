@@ -21,12 +21,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function IndexScreen() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
+  const {setUserName} = useSpeechStore()
 
-  const { setUserName, userName } = useSpeechStore();
   useEffect(() => {
     const checkOnboarded = async () => {
       const onboarded = await AsyncStorage.getItem("onboarded");
-      if (onboarded === "true") {
+      if (onboarded === "true" ) {
         router.replace("/(main)");
       }
     };
@@ -82,7 +82,7 @@ export default function IndexScreen() {
                     Alert.alert("Name cannot have less than 3 characters");
                     return;
                   }
-                  signIn({ name: trimmed, setUserName });
+                  signIn({ name: trimmed , setUserName});
                 }}
               >
                 <View className="flex flex-row justify-center items-center gap-2">

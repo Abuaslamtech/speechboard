@@ -18,19 +18,23 @@ export default function IndexScreen() {
   });
 
   const [showModal, setShowModal] = useState(false);
-  const { setUserName } = useSpeechStore();
 
   // data
   const settingsdata: settingsDataType[] = [
     { icon: "user", label: "Change Name", onPress: () => setShowModal(true) },
-    { icon: "info", label: "About SpeechBoard", onPress: () => {} },
+    {
+      icon: "info",
+      label: "About SpeechBoard",
+      onPress: () => {
+        router.navigate("/about");
+      },
+    },
     {
       icon: "log-out",
       label: "Log Out",
       onPress: async () => {
-        await AsyncStorage.setItem("onboarded", "false");
-        setUserName("");
-        router.replace("/(home)");
+        await AsyncStorage.clear();
+        router.push("/(home)");
       },
     },
   ];

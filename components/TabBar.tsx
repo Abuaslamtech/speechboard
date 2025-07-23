@@ -34,7 +34,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                 return "home";
               case "favorites":
                 return "heart";
-              case "(settings)/index":
+              case "(settings)":
                 return "settings";
               default:
                 return "circle";

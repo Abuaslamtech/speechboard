@@ -1,15 +1,27 @@
 import { useSpeechStore } from "@/store/useSpeechStore";
 import { getLanguageName } from "@/utils/utils";
 import { Feather } from "@expo/vector-icons";
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
 import { FlatList, Modal, Text, TouchableOpacity, View } from "react-native";
 
 export default function Header() {
-  const { voiceList, setSpeaker, speaker } = useSpeechStore();
+  const {
+    voiceList,
+    setSpeaker,
+    speaker,
+    setUserName,
+    userName,
+    loadUserName,
+  } = useSpeechStore();
 
   const [showVoiceSelector, setShowVoiceSelector] = useState(false);
+
   const [selectedVoice, setSelectedVoice] = useState(voiceList?.[0].identifier);
-  const { userName } = useSpeechStore();
+ 
+  useEffect(() => {
+    loadUserName();
+  }, []);
 
   return (
     <View className="w-[95%] flex flex-row justify-between bg-card py-4 px-4 rounded-full border-b border-x border-accentBlue">
@@ -71,7 +83,11 @@ export default function Header() {
                     </View>
                     <View>
                       <Text
-                        className={`text-base font-semibold ${item.identifier === selectedVoice ? "text-accentBlue" : "text-white"}`}
+                        className={`text-base font-semibold ${
+                          item.identifier === selectedVoice
+                            ? "text-accentBlue"
+                            : "text-white"
+                        }`}
                       >
                         Speaker - {item.name}
                       </Text>

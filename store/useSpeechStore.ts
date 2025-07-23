@@ -5,12 +5,14 @@ import {
   isPopular,
   popularLanguageCodes,
 } from "@/utils/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Speech from "expo-speech";
 import { create } from "zustand";
 
 export const useSpeechStore = create<storeTypes>((set, get) => ({
   loadFavorites: async () => {
-    const result = await getData();
+    const stored = await AsyncStorage.getItem("favorites")
+    const result = stored ?  JSON.parse(stored) : []
     set({ favorites: result });
   },
   favorites: [],
@@ -20,12 +22,20 @@ export const useSpeechStore = create<storeTypes>((set, get) => ({
       item,
       favorites: state.favorites,
     });
+    await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites))
     set({ favorites: updatedFavorites });
   },
   speakingItem: null,
   voiceList: null,
   userName: "",
+  loadUserName: async () => {
+    const name = await AsyncStorage.getItem("name");
+    if (name) {
+      set({ userName: name });
+    }
+  },
   setUserName: async (name: string) => {
+    await AsyncStorage.setItem("name", name);
     set({ userName: name });
   },
   isVoiceReady: false,

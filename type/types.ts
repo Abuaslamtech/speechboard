@@ -77,10 +77,11 @@ export type storeTypes = {
   setSpeaker: (selectedVoice:string) => Promise<void>;
   userName: string;
   setUserName: (name:string) => void;
+  loadUserName: () => Promise<void>;
 };
 
 // signIn
-export type signInTypes  {
+export type signInTypes = {
   name: string;
   setUserName: (name:string) => void;
 }
